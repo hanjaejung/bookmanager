@@ -5,14 +5,14 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
 
 @SpringBootTest
 class UserRepositoryTest {
@@ -94,20 +94,30 @@ class UserRepositoryTest {
 //        userRepository.findAll().forEach(System.out::println);
 
 // *paging* test
-        //of메소드를 살펴보면 page부분 설명이 zero-based page index 라고 나옵니다
+        //PageRequest.of메소드를 살펴보면 page부분 설명이 zero-based page index 라고 나옵니다
         //숫자가 1부터 시작이 아니라 0부터 시작이라는 뜻입니다
         //그래서 1로 설정하면 2번째 페이지입니다.
         //그래서 data.sql에 5개의 데이터가 설정이 되어 있어서
         //2번째 페이지는 4,5 이 2개의 페이지가 users페이지에 있습니다.
-        Page<Users> users = userRepository.findAll(PageRequest.of(1, 3));
+//        Page<Users> users = userRepository.findAll(PageRequest.of(1, 3));
+//
+//        System.out.println("page : " + users);
+//        System.out.println("totalElements : " + users.getTotalElements());
+//        System.out.println("totalPages : " + users.getTotalPages());
+//        System.out.println("numberOfElements : " + users.getNumberOfElements());
+//        System.out.println("sort : " + users.getSort());
+//        System.out.println("size : " + users.getSize());
+//
+//        users.getContent().forEach(System.out::println);
 
-        System.out.println("page : " + users);
-        System.out.println("totalElements : " + users.getTotalElements());
-        System.out.println("totalPages : " + users.getTotalPages());
-        System.out.println("numberOfElements : " + users.getNumberOfElements());
-        System.out.println("sort : " + users.getSort());
-        System.out.println("size : " + users.getSize());
-
-        users.getContent().forEach(System.out::println);
+//*ExampleMatcher, Example*인터페이스 test
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnorePaths("name")  //withIgnorePaths 제외한다는뜻
+                .withMatcher("email", endsWith()); //withMatcher like로 조회한다는 뜻
+                //endsWith()는 끝에 오는걸 검색한다는 뜻뜻
+                //contains()를 쓰면 양방향 검색이 된다
+       Example<Users> example = Example.of(new Users("ma","fastcampus.com"),matcher);
+        //matcher없이 조회하면 where조건절에 그대로 검색이 된다
+        userRepository.findAll(example).forEach(System.out::println);
     }
 }
