@@ -111,13 +111,23 @@ class UserRepositoryTest {
 //        users.getContent().forEach(System.out::println);
 
 //*ExampleMatcher, Example*인터페이스 test
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withIgnorePaths("name")  //withIgnorePaths 제외한다는뜻
-                .withMatcher("email", endsWith()); //withMatcher like로 조회한다는 뜻
-                //endsWith()는 끝에 오는걸 검색한다는 뜻뜻
-                //contains()를 쓰면 양방향 검색이 된다
-       Example<Users> example = Example.of(new Users("ma","fastcampus.com"),matcher);
-        //matcher없이 조회하면 where조건절에 그대로 검색이 된다
-        userRepository.findAll(example).forEach(System.out::println);
+//        ExampleMatcher matcher = ExampleMatcher.matching()
+//                .withIgnorePaths("name")  //withIgnorePaths 제외한다는뜻
+//                .withMatcher("email", endsWith()); //withMatcher like로 조회한다는 뜻
+//                //endsWith()는 끝에 오는걸 검색한다는 뜻뜻
+//                //contains()를 쓰면 양방향 검색이 된다
+//       Example<Users> example = Example.of(new Users("ma","fastcampus.com"),matcher);
+//        //matcher없이 조회하면 where조건절에 그대로 검색이 된다
+//        userRepository.findAll(example).forEach(System.out::println);
+
+        userRepository.save(new Users("david", "david@fastcampus.com"));
+
+        Users users = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        users.setEmail("martin-updated@fastcampus.com");
+
+        userRepository.save(users);
+        //save시 오픈소스를 보면
+        //Entity클래스에 설정해두었던 id를 기준으로 존재하지않으면 insert 존재하면 update를 실행
+        //하게 되어있습니다.
     }
 }
