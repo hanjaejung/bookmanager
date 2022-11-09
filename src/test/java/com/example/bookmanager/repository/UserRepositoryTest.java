@@ -94,8 +94,20 @@ class UserRepositoryTest {
 //        userRepository.findAll().forEach(System.out::println);
 
 // *paging* test
+        //of메소드를 살펴보면 page부분 설명이 zero-based page index 라고 나옵니다
+        //숫자가 1부터 시작이 아니라 0부터 시작이라는 뜻입니다
+        //그래서 1로 설정하면 2번째 페이지입니다.
+        //그래서 data.sql에 5개의 데이터가 설정이 되어 있어서
+        //2번째 페이지는 4,5 이 2개의 페이지가 users페이지에 있습니다.
         Page<Users> users = userRepository.findAll(PageRequest.of(1, 3));
 
-        System.out.println(users);
+        System.out.println("page : " + users);
+        System.out.println("totalElements : " + users.getTotalElements());
+        System.out.println("totalPages : " + users.getTotalPages());
+        System.out.println("numberOfElements : " + users.getNumberOfElements());
+        System.out.println("sort : " + users.getSort());
+        System.out.println("size : " + users.getSize());
+
+        users.getContent().forEach(System.out::println);
     }
 }
