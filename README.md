@@ -9,4 +9,5 @@ SimpleJpaRepository.java에 있는 save메소드가 어떤식으로 코딩되어
 => save시 오픈소스를 보면
    Entity클래스에 설정해두었던 id를 기준으로 존재하지않으면 insert 존재하면 update를 실행
    하게 되어있습니다.
+쿼리메소드 테스트를 진행하였습니다.
 
