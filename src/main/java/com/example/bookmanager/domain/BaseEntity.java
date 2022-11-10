@@ -1,5 +1,6 @@
 package com.example.bookmanager.domain;
 
+import com.example.bookmanager.domain.listener.Auditable;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @MappedSuperclass //상속받은 entity에 선언한 createdAt과 updatedAt컬럼을 테이블마다 생성해준다
 @EntityListeners(value = AuditingEntityListener.class)
-public class BaseEntity {
+public class BaseEntity implements Auditable {
     @CreatedDate
     private LocalDateTime createdAt;
 
