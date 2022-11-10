@@ -1,10 +1,15 @@
 package com.example.bookmanager.repository;
 
 import com.example.bookmanager.domain.Users;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface UserRepository extends JpaRepository<Users, Long> {
@@ -67,4 +72,16 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     List<Users> findByNameContains(String name);
 
     List<Users> findByNameLike(String name);
+
+    List<Users> findTopByNameOrderByIdDesc(String name);
+
+    List<Users> findFirstByNameOrderByIdDescEmailAsc(String name);
+
+    List<Users> findFirstByName(String name, Sort sort);
+
+    Page<Users> findByName(String name, Pageable pageable);
+    //page<T> 안의 제네릭은 받고자 하는 entity를 넣으면 된다
+
+    @Query(value = "select * from users limit 1;", nativeQuery = true)
+    Map<String, Object> findRawRecord();
 }
