@@ -16,6 +16,8 @@ class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
 
     @Test
     @Transactional //세션유지시켜주는 어노테이션?
@@ -205,5 +207,65 @@ class UserRepositoryTest {
         userRepository.findAll().forEach(System.out::println);
 
         System.out.println(userRepository.findRawRecord().get("gender"));
+    }
+
+    @Test
+    void listenerTest() {
+        //기본리스너 테스트를 진행하였습니다.
+        //@PrePersist insert전에 수행되는 어노테이션
+        //@PreUpdate  update전에 수행되는 어노테이션
+        //Users클래스에 어노테이션을 달아 테스트를 진행하였습니다 현재는 주석처리 상태입니다.
+        Users user = new Users();
+        user.setEmail("martin2@fastcampus.com");
+        user.setName("martin");
+
+        userRepository.save(user);
+
+        Users user2 = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setName("marrrrrtin");
+
+        userRepository.save(user2);
+
+        userRepository.deleteById(4L);
+    }
+
+    @Test
+    void prePersistTest() {
+        Users user = new Users();
+        user.setEmail("martin2@fastcampus.com");
+        user.setName("martin");
+//        user.setCreatedAt(LocalDateTime.now());
+//        user.setUpdatedAt(LocalDateTime.now());
+
+        userRepository.save(user);
+
+        System.out.println(userRepository.findByEmail("martin2@fastcampus.com"));
+    }
+
+    @Test
+    void preUpdateTest() {
+        Users user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+
+        System.out.println("as-is : " + user);
+
+        user.setName("martin22");
+        userRepository.save(user);
+
+        System.out.println("to-be : " + userRepository.findAll().get(0));
+    }
+
+    @Test
+    void userHistoryTest() {
+        Users user = new Users();
+        user.setEmail("martin-new@fastcampus.com");
+        user.setName("martin-new");
+
+        userRepository.save(user);
+
+        user.setName("martin-new-new");
+
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
     }
 }
