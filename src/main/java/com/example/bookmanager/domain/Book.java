@@ -22,7 +22,11 @@ public class Book extends BaseEntity{
 
     private String name;
 
-    private String author;
+    private String category;
+
+    private Long authorId;
+
+    private Long publisherId;
 
 //    @CreatedDate //BaseEntity클래스로 뺴주어서 일일이 어노테이션을 달필요가 없습니다
 //    private LocalDateTime createdAt;
