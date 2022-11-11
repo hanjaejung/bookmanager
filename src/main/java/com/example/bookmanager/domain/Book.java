@@ -6,9 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.lang.reflect.Type;
 
 @Entity
 @NoArgsConstructor
@@ -17,7 +16,7 @@ import javax.persistence.Id;
 @EqualsAndHashCode(callSuper = true)
 public class Book extends BaseEntity{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -27,6 +26,10 @@ public class Book extends BaseEntity{
     private Long authorId;
 
     private Long publisherId;
+
+    @OneToOne(mappedBy = "book")//이쪽엔느 포합시키지 않겠다는 뜻
+    @ToString.Exclude
+    private BookReviewInfo bookReviewInfo;
 
 //    @CreatedDate //BaseEntity클래스로 뺴주어서 일일이 어노테이션을 달필요가 없습니다
 //    private LocalDateTime createdAt;

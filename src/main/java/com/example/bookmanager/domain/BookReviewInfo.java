@@ -5,9 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -17,10 +15,13 @@ import javax.persistence.Id;
 //자동 생성 할 수 있게 하는 어노테이션
 public class BookReviewInfo extends BaseEntity{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long bookId;
+    //private Long bookId;
+
+    @OneToOne(optional = false)//1대1연관관계라는뜻
+    private Book book;
 
     private float averageReviewScore;
     //대문자 Float Wrapper타입은 nullpointException에러에 걸릴 수 있다
