@@ -1,6 +1,10 @@
 # bookmanager
 도서관리프로그램
 
+2022-11-11
+BookReviewInfo entity생성 후 insert테스트
+ERD대로 BOOK 필드 수정
+
 2022-11-10
 첫번째 Listener 테스트
 기본리스너 테스트를 진행하였습니다.
