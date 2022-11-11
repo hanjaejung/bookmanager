@@ -4,6 +4,7 @@
 2022-11-11
 BookReviewInfo entity생성 후 insert테스트
 ERD대로 BOOK 필드 수정
+Book, BookReviewInfo 1대1 연관관계 
 
 2022-11-10
 첫번째 Listener 테스트
