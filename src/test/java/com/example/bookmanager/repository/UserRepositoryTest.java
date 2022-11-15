@@ -1,6 +1,7 @@
 package com.example.bookmanager.repository;
 
 import com.example.bookmanager.domain.Gender;
+import com.example.bookmanager.domain.UserHistory;
 import com.example.bookmanager.domain.Users;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.*;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest
 class UserRepositoryTest {
@@ -267,5 +269,38 @@ class UserRepositoryTest {
         userRepository.save(user);
 
         userHistoryRepository.findAll().forEach(System.out::println);
+
+
+    }
+
+    @Test
+    void userRelationTest() {
+
+
+        Users user = new Users();
+        user.setName("david");
+        user.setEmail("david@fastcampus.com");
+        user.setGender(Gender.MALE);
+
+
+        userRepository.save(user);
+
+        user.setName("daniel");
+
+        userRepository.save(user);
+
+        user.setEmail("daniel@fastcampus.com");
+
+        userRepository.save(user);
+
+//        userHistoryRepository.findAll().forEach(System.out::println);
+//
+//        List<UserHistory> result = userHistoryRepository.findByUserId(
+//                userRepository.findByEmail("daniel@fastcampus.com").getId()
+//        );
+
+        List<UserHistory> result = userRepository.findByEmail("daniel@fastcampus.com").getUserHistories();
+
+        result.forEach(System.out::println);
     }
 }

@@ -8,6 +8,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -33,6 +34,10 @@ public class Users extends BaseEntity {
 
     @Enumerated(value = EnumType.STRING) //@Enumerated 이 어노테이션은 default 상태가 ORDINAL라서 MALE은 0, FEMALE은 1 이다
     private Gender gender;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private List<UserHistory> userHistories = new ArrayList<>();
 
 //    @Transient //영속성,db 레코드에는 처리하지 않지만 객체에서 따로 쓰기 위해서 쓰인다
 //    private String testData;
