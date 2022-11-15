@@ -37,7 +37,13 @@ public class Users extends BaseEntity {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @ToString.Exclude
     private List<UserHistory> userHistories = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    @ToString.Exclude
+    private List<Review> reviews = new ArrayList<>();
 
 //    @Transient //영속성,db 레코드에는 처리하지 않지만 객체에서 따로 쓰기 위해서 쓰인다
 //    private String testData;

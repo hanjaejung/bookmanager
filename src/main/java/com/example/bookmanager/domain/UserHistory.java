@@ -19,12 +19,15 @@ public class UserHistory  extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+//    @Column(name = "user_id")
+//    private Long userId;
 
     private String name;
 
     private String email;
+
+    @ManyToOne
+    private Users user;
 
 //    @CreatedDate //BaseEntity클래스로 뺴주어서 일일이 어노테이션을 달필요가 없습니다
 //    private LocalDateTime createdAt;
