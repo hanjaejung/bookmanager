@@ -1,6 +1,13 @@
 # bookmanager
 도서관리프로그램
 
+2022-11-15
+relation 1대N 연관관계 테스트
+erd에 따른 Review, Publisher entity 생성
+relation N대1 연관관계 테스트
+relation N대N 연관관계 테스트
+h2 db를 mysql로 변경 => 즉 영속성 컨텍스트로 변경
+
 2022-11-11
 BookReviewInfo entity생성 후 insert테스트
 ERD대로 BOOK 필드 수정
