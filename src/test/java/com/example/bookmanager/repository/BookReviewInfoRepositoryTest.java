@@ -20,6 +20,10 @@ class BookReviewInfoRepositoryTest {
     void crudTest(){
         BookReviewInfo bookReviewInfo = new BookReviewInfo();
 //        bookReviewInfo.setBookId(1L);
+        bookReviewInfo.setBook(givenBook()); //Book을 강제 주입함으로써
+        //Book이 null이라 에러가 나는것을 방지
+        //optional = false @원투원어노테이션에서 이 속성은 null일떄
+        //에러가 발생한다
         bookReviewInfo.setAverageReviewScore(4.5f);
         bookReviewInfo.setReviewCount(2);
 

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest
+@Transactional
 class UserRepositoryTest {
 
     @Autowired
@@ -284,7 +285,7 @@ class UserRepositoryTest {
 
 
         userRepository.save(user);
-
+        userHistoryRepository.findAll().forEach(System.out::println);
         user.setName("daniel");
 
         userRepository.save(user);
